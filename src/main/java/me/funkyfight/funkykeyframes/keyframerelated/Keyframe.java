@@ -53,7 +53,7 @@ public class Keyframe {
 
         // If the progression is greater or equal than 1, do nothing
         if (this.progression >= 1) {
-            if(!isAfterDone) {
+            if(!isAfterDone && after != null) {
                 after.after();
                 isAfterDone = true;
             }
