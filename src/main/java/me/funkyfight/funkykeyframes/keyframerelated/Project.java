@@ -1,6 +1,7 @@
 package me.funkyfight.funkykeyframes.keyframerelated;
 
 import me.funkyfight.funkykeyframes.FunkyKeyframes;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -10,10 +11,13 @@ public class Project {
 
     private String name;
     private HashMap<Integer, ArrayList<Keyframe>> keyframes;
+    private JavaPlugin INSTANCE;
 
-    public Project(String name) {
+    public Project(String name, JavaPlugin plugin) {
         this.name = name;
+        this.INSTANCE = plugin;
     }
+
 
     public void keyframe(Keyframe keyframe, Integer timeInSeconds) {
         if (keyframes == null) {
@@ -57,7 +61,7 @@ public class Project {
                     cancel();
                 }
             }
-        }.runTaskTimer(FunkyKeyframes.INSTANCE, 0, 1);
+        }.runTaskTimer(INSTANCE, 0, 1);
 
     }
 
