@@ -1,6 +1,7 @@
 package me.funkyfight.funkykeyframes.keyframerelated;
 
 import me.funkyfight.funkykeyframes.FunkyKeyframes;
+import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -12,6 +13,8 @@ public class Project {
     private String name;
     private HashMap<Integer, ArrayList<Keyframe>> keyframes;
     private JavaPlugin INSTANCE;
+
+    private ArrayList<Entity> entities;
 
     public Project(String name, JavaPlugin plugin) {
         this.name = name;
@@ -27,6 +30,25 @@ public class Project {
             keyframes.put(timeInSeconds, new ArrayList<>());
         }
         keyframes.get(timeInSeconds).add(keyframe);
+    }
+
+    public void registerEntity(Entity entity) {
+        if(entities == null) {
+            entities = new ArrayList<>();
+        }
+        entities.add(entity);
+    }
+
+    public void unregisterEntity(Entity entity) {
+        entities.remove(entity);
+    }
+
+    public void unregisterAllEntities() {
+        entities.clear();
+    }
+
+    public ArrayList<Entity> getRegisteredEntities() {
+        return entities;
     }
 
     public void play() {
