@@ -21,6 +21,11 @@ public class Project {
         this.INSTANCE = plugin;
     }
 
+    @FunctionalInterface
+    public interface onFinish {
+        void onFinish();
+    }
+
 
     public void keyframe(Keyframe keyframe, Integer timeInSeconds) {
         if (keyframes == null) {
@@ -51,7 +56,7 @@ public class Project {
         return entities;
     }
 
-    public void play() {
+    public void play(onFinish onFinish) {
         // Firstly, we need to get the current time in seconds of the animation
         final int[] timeInSeconds = {0};
         keyframes.forEach((integer, keyframes1) -> {
@@ -80,6 +85,7 @@ public class Project {
                 });
 
                 if(current_tick_playing/20 >= timeInSeconds[0]) {
+                    onFinish.onFinish();
                     cancel();
                 }
             }
