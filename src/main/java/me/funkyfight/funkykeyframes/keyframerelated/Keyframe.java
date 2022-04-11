@@ -16,11 +16,22 @@ public class Keyframe {
     public Integer ticks;
     public Curve curve;
     public KeyframeInterface keyframeInterface;
+    private afterInterface after;
+    private boolean isAfterDone = false;
+
     public Keyframe(Integer duration, Curve curve, KeyframeInterface onUpdate) {
         this.ticks = duration;
         this.curve = curve;
         this.keyframeInterface = onUpdate;
         this.step = 1f / (float)ticks;
+    }
+
+    public Keyframe(Integer duration, Curve curve, KeyframeInterface onUpdate, afterInterface after) {
+        this.ticks = duration;
+        this.curve = curve;
+        this.keyframeInterface = onUpdate;
+        this.step = 1f / (float)ticks;
+        this.after = after;
     }
 
 
@@ -30,12 +41,22 @@ public class Keyframe {
         void update(double value);
     }
 
+    @FunctionalInterface
+    public interface afterInterface {
+        void after();
+    }
+
+
     public void execute() {
         // Add step to the current progression
         progression += this.step;
 
         // If the progression is greater or equal than 1, do nothing
         if (this.progression >= 1) {
+            if(!isAfterDone) {
+                after.after();
+                isAfterDone = true;
+            }
             return;
         }
 
