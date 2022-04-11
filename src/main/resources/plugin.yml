@@ -1,0 +1,8 @@
+name: FunkyKeyframes
+version: '${project.version}'
+main: me.funkyfight.funkykeyframes.FunkyKeyframes
+api-version: 1.17
+description: Make better animations!
+commands:
+  keyframe-tester:
+    description: Tester
